@@ -1,3 +1,3 @@
-# genius
+# lyrics
 
-A simple package for scraping lyrics off of [Genius](https://www.genius.com).
+A command line tool for getting song lyrics off of [Genius](https://www.genius.com).

@@ -70,5 +70,8 @@ func Lyrics(artist, song string) (l []string, err error) {
 	defer r.Body.Close()
 
 	l = parseLyrics(r.Body)
+	if len(l) == 0 {
+		err = fmt.Errorf("no lyrics parsed")
+	}
 	return
 }
