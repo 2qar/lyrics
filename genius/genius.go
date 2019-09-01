@@ -66,10 +66,13 @@ func Lyrics(artist, song string) (l []string, err error) {
 }
 
 // LyricsURL returns the lyrics from a specific page.
-func LyricsURL(url string) (l []string, err error) {
+func LyricsURL(url string) ([]string, error) {
+	var l []string
 	r, err := http.Get(url)
 	if err != nil {
-		return
+		return l, err
+	} else if r.StatusCode == 404 {
+		return l, fmt.Errorf("404: %s not found", url)
 	}
 	defer r.Body.Close()
 
@@ -77,5 +80,5 @@ func LyricsURL(url string) (l []string, err error) {
 	if len(l) == 0 {
 		err = fmt.Errorf("no lyrics parsed")
 	}
-	return
+	return l, err
 }
