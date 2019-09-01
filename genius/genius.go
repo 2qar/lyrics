@@ -10,7 +10,7 @@ import (
 	"golang.org/x/net/html"
 )
 
-// parseLyrics returns the lyrics from a Genius page.
+// parseLyrics returns the lyrics from a Genius page, or an empty []string if it couldn't find them.
 func parseLyrics(r io.Reader) (lyrics []string) {
 	z := html.NewTokenizer(r)
 
@@ -62,7 +62,11 @@ func toSlug(s string) string {
 // Lyrics returns the lyrics to a song by a given artist.
 func Lyrics(artist, song string) (l []string, err error) {
 	url := fmt.Sprintf("https://www.genius.com/%s-%s-lyrics", toSlug(artist), toSlug(song))
+	return LyricsURL(url)
+}
 
+// LyricsURL returns the lyrics from a specific page.
+func LyricsURL(url string) (l []string, err error) {
 	r, err := http.Get(url)
 	if err != nil {
 		return
